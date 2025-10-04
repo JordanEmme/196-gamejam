@@ -1,8 +1,6 @@
 extends CharacterBody2D
 
-@onready var grindable = $"../Grindable"
-@onready var area2d = $"Colliders/Grindables"
-
+@onready var grindables = $"../Grindables"
 @onready var animated_sprite = $AnimatedSprite2D
 
 # Constants
@@ -100,13 +98,12 @@ func _physics_process(dt: float) -> void:
 
 
 func _on_colliders_body_entered(body: Node2D) -> void:
-  if body == grindable:
+  if body.get_parent() == grindables:
     print("Enter")
     on_grindable = true
 
 
 func _on_colliders_body_exited(body: Node2D) -> void:
-  if body == grindable:
-    print("exit")
+  if body.get_parent() == grindables:
     on_grindable = false
     is_grinding = false
