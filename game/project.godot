@@ -24,6 +24,10 @@ window/size/window_height_override=1080
 window/stretch/scale=4.0
 window/stretch/scale_mode="integer"
 
+[gui]
+
+theme/custom_font="uid://d0cvbtq0x7qv8"
+
 [input]
 
 left={

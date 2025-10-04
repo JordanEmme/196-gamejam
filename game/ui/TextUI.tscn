@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://basfohrrdlupa"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -26.0
+offset_right = 50.0
+offset_bottom = -10.0
+grow_vertical = 0
+text = "Score:"
+metadata/_edit_lock_ = true

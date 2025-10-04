@@ -1,20 +1,25 @@
 extends CharacterBody2D
 
 @onready var grindables = $"../Grindables"
-@onready var animated_sprite = $AnimatedSprite2D
+@onready var animated_sprite = $AntifaSprite
+@onready var player_camera = $AntifaCamera
 
 # Constants
 
+  # Window
+const SCENE_WIDTH:float = 480.
+const SCENE_HEIGHT:float = 270.
+
   # Physics
-const ACCEL: float = 400.
-const GRAVITY: float = 500.
-const MAX_H_VELOCITY: float = 400.
-const MIN_H_VELOCITY: float = 10.
+const ACCEL: float = 300.
+const GRAVITY: float = 700.
+const MAX_H_VELOCITY: float = 300.
+const MIN_H_VELOCITY: float = 50.
 const FRICTION: float = .01
 
 const GRIND_VEL_THRESHOLD: float = MAX_H_VELOCITY * .5
-const JUMP_SMALL_IMPULSE: float = 300.
-const JUMP_BIG_IMPULSE: float = 500.
+const JUMP_SMALL_IMPULSE: float = 250.
+const JUMP_BIG_IMPULSE: float = 325.
 
   # Timers
 const JUMP_TIMER: float = .5
@@ -37,11 +42,11 @@ func get_input(dt: float) -> void:
   if Input.is_action_pressed("left"):
     facing_right = false
     velocity.x -= dt * ACCEL
-    animated_sprite.flip_h = true
+    animated_sprite.flip_h = !facing_right
   elif Input.is_action_pressed("right"):
     facing_right = true
     velocity.x += dt * ACCEL
-    animated_sprite.flip_h = false
+    animated_sprite.flip_h = !facing_right
   elif (abs(velocity.x) < MIN_H_VELOCITY):
     velocity.x = 0.
 
@@ -111,7 +116,7 @@ func _physics_process(dt: float) -> void:
     if kick_cooldown < KICK_COOLDOWN - KICK_DURATION:
       is_kicking = false
 
-  
+
   # Enforced physics state
   if is_grinding:
     velocity.x = MAX_H_VELOCITY if facing_right else -MAX_H_VELOCITY

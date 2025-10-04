@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cm7uxrmb3akh0"]
 
-[ext_resource type="Texture2D" uid="uid://nmx6ju4xcexe" path="res://icon.svg" id="1_d4d1x"]
+[ext_resource type="Texture2D" uid="uid://cuctnkrc7beqw" path="res://assets/tilemap.png" id="1_wgnsv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fncim"]
 size = Vector2(58, 8)
@@ -12,7 +12,7 @@ collision_mask = 2
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(3.8146973e-06, 0)
 scale = Vector2(0.4531249, 0.0625)
-texture = ExtResource("1_d4d1x")
+texture = ExtResource("1_wgnsv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_fncim")

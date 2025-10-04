@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://ccsuiov4ju6lv"]
 
-[ext_resource type="Script" uid="uid://4crxwkngetem" path="res://characters/antifa.gd" id="1_txhom"]
+[ext_resource type="Script" uid="uid://4crxwkngetem" path="res://sprites/characters/antifa.gd" id="1_txhom"]
 [ext_resource type="Texture2D" uid="uid://de5va1dtuqr0l" path="res://assets/antifa.png" id="2_6xi77"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ua63u"]
@@ -93,12 +93,12 @@ size = Vector2(20, 8)
 [node name="Antifa" type="CharacterBody2D"]
 script = ExtResource("1_txhom")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AntifaSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_5u05h")
 animation = &"grind"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="AntifaCollision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_10cyg")
 
@@ -110,7 +110,8 @@ collision_mask = 2
 position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_6xi77")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="AntifaCamera" type="Camera2D" parent="."]
+limit_left = 0
 limit_top = 135
 limit_bottom = 135
 drag_horizontal_enabled = true
