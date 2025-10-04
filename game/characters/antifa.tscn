@@ -1,7 +1,65 @@
-[gd_scene load_steps=4 format=3 uid="uid://ccsuiov4ju6lv"]
+[gd_scene load_steps=10 format=3 uid="uid://ccsuiov4ju6lv"]
 
 [ext_resource type="Script" uid="uid://4crxwkngetem" path="res://characters/antifa.gd" id="1_txhom"]
-[ext_resource type="Texture2D" uid="uid://6csyc81smwm2" path="res://assets/icon.svg" id="2_wuqut"]
+[ext_resource type="Texture2D" uid="uid://de5va1dtuqr0l" path="res://assets/antifa.png" id="2_6xi77"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ua63u"]
+atlas = ExtResource("2_6xi77")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f607m"]
+atlas = ExtResource("2_6xi77")
+region = Rect2(64, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vambv"]
+atlas = ExtResource("2_6xi77")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7260"]
+atlas = ExtResource("2_6xi77")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oshik"]
+atlas = ExtResource("2_6xi77")
+region = Rect2(48, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5u05h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ua63u")
+}],
+"loop": true,
+"name": &"crouching",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f607m")
+}],
+"loop": true,
+"name": &"jumping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vambv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7260")
+}],
+"loop": true,
+"name": &"skating",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oshik")
+}],
+"loop": true,
+"name": &"super_crouching",
+"speed": 5.0
+}]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_10cyg"]
 
@@ -9,10 +67,11 @@
 script = ExtResource("1_txhom")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(4.7683716e-07, -15)
-scale = Vector2(0.15625001, 0.234375)
-texture = ExtResource("2_wuqut")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -15)
+sprite_frames = SubResource("SpriteFrames_5u05h")
+animation = &"skating"
+frame_progress = 0.7310848
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -15)

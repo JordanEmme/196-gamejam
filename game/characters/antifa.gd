@@ -3,6 +3,8 @@ extends CharacterBody2D
 @onready var grindable = $"../Grindable"
 @onready var area2d = $"Colliders/Grindables"
 
+@onready var animated_sprite = $AnimatedSprite2D
+
 # Constants
 
 const ACCEL: float = 400.
@@ -23,10 +25,15 @@ func get_input(dt: float) -> void:
   # Horizontal movement
   if Input.is_action_pressed("left"):
     velocity.x -= dt * ACCEL
+    animated_sprite.flip_h = true
+    animated_sprite.play("skating")
   elif Input.is_action_pressed("right"):
     velocity.x += dt * ACCEL
+    animated_sprite.flip_h = false
+    animated_sprite.play("skating")
   elif (abs(velocity.x) < MIN_H_VELOCITY):
     velocity.x = 0.
+    animated_sprite.stop()
 
 
   # Jump
