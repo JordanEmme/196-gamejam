@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var grindable = $"../Grindable"
+
 @export var acceleration: float = 400.
 @export var grav: float = 1000.
 @export var MAX_H_VELOCITY: float = 400.
@@ -18,7 +20,7 @@ var can_kick: bool = true
 var jump_charge: float = 0.
 
 
-func get_input(dt: float):
+func get_input(dt: float) -> void:
 
   # Horizontal movement
   if Input.is_action_pressed("left"):
@@ -36,13 +38,18 @@ func get_input(dt: float):
       jump_charge = min(JUMP_TIMER_CAP, jump_charge)
     elif Input.is_action_just_released("jump"):
       velocity.y = -JUMP_SMALL_IMPULSE if jump_charge < JUMP_TIMER else -JUMP_BIG_IMPULSE
+      jump_charge = 0.;
 
 
-func _physics_process(dt: float):
+func _physics_process(dt: float) -> void:
   get_input(dt)
   # Friction
   velocity.x -= sign(velocity.x) * dt * velocity.x * velocity.x * FRICTION
   velocity.x = clamp(velocity.x, -MAX_H_VELOCITY, MAX_H_VELOCITY);
   # Gravity
   velocity.y += dt * grav
+  for i in get_slide_collision_count():
+    var collider = get_slide_collision(i).get_collider()
+    if collider == grindable:
+      print("yeah")
   move_and_slide()
