@@ -1,33 +1,30 @@
 extends CharacterBody2D
 
 @onready var grindable = $"../Grindable"
-@onready var area2d = $"Area2D/CollisionShape2D"
-
-@export var acceleration: float = 400.
-@export var grav: float = 1000.
-@export var MAX_H_VELOCITY: float = 400.
-@export var MIN_H_VELOCITY: float = 10.
-@export var FRICTION: float = .01
-@export var JUMP_TIMER: float = 1.
-@export var JUMP_TIMER_CAP: float= 2.
-@export var JUMP_SMALL_IMPULSE: float = 300.
-@export var JUMP_BIG_IMPULSE: float = 500.
+@onready var area2d = $"Colliders/Grindables"
 
 # Constants
 
-# Player States
-var idle: bool = true
-var can_kick: bool = true
-var jump_charge: float = 0.
+const ACCEL: float = 400.
+const GRAVITY: float = 1000.
+const MAX_H_VELOCITY: float = 400.
+const MIN_H_VELOCITY: float = 10.
+const FRICTION: float = .01
+const JUMP_TIMER: float = 1.
+const JUMP_TIMER_CAP: float= 2.
+const JUMP_SMALL_IMPULSE: float = 300.
+const JUMP_BIG_IMPULSE: float = 500.
 
+# Player States
+var jump_charge: float = 0.
 
 func get_input(dt: float) -> void:
 
   # Horizontal movement
   if Input.is_action_pressed("left"):
-    velocity.x -= dt * acceleration
+    velocity.x -= dt * ACCEL
   elif Input.is_action_pressed("right"):
-    velocity.x += dt * acceleration
+    velocity.x += dt * ACCEL
   elif (abs(velocity.x) < MIN_H_VELOCITY):
     velocity.x = 0.
 
@@ -48,15 +45,15 @@ func _physics_process(dt: float) -> void:
   velocity.x -= sign(velocity.x) * dt * velocity.x * velocity.x * FRICTION
   velocity.x = clamp(velocity.x, -MAX_H_VELOCITY, MAX_H_VELOCITY);
   # Gravity
-  velocity.y += dt * grav
-  # for i in area2d.get_slide_collision_count():
-  #   var collider = get_slide_collision(i).get_collider()
-  #   if collider == grindable:
-  #     print("yeah")
+  velocity.y += dt * GRAVITY
   move_and_slide()
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
   if body == grindable:
     print("yeahh")
+  pass # Replace with function body.
+
+
+func _on_colliders_body_exited(body: Node2D) -> void:
   pass # Replace with function body.
