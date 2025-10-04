@@ -85,12 +85,11 @@ texture = ExtResource("2_kuu6s")
 physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_4ikc1")
 
-[node name="Node2D" type="Node2D"]
+[node name="Game" type="Node2D"]
 metadata/_edit_lock_ = true
 
 [node name="Antifa" parent="." instance=ExtResource("2_0d5ds")]
-position = Vector2(627, 375)
-script = null
+position = Vector2(624, 379)
 
 [node name="Foreground" type="TileMapLayer" parent="."]
 position = Vector2(627, 346)
