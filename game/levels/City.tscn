@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c0ywall4p0xk6" path="res://assets/backgrounds/near_clouds.png" id="4_i3iap"]
 [ext_resource type="Texture2D" uid="uid://7jb7qcnfy1rt" path="res://assets/backgrounds/far_clouds.png" id="5_aw0ow"]
 [ext_resource type="Texture2D" uid="uid://cfpybp1f7u4cn" path="res://assets/backgrounds/sky.png" id="6_0xxye"]
-[ext_resource type="PackedScene" path="res://assets/rail.tscn" id="6_aw0ow"]
+[ext_resource type="PackedScene" uid="uid://cm7uxrmb3akh0" path="res://assets/rail.tscn" id="6_aw0ow"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4ikc1"]
 texture = ExtResource("2_kuu6s")
