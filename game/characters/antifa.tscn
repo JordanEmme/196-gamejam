@@ -7,6 +7,10 @@
 atlas = ExtResource("2_6xi77")
 region = Rect2(32, 0, 16, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_oshik"]
+atlas = ExtResource("2_6xi77")
+region = Rect2(48, 0, 16, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_f607m"]
 atlas = ExtResource("2_6xi77")
 region = Rect2(64, 0, 16, 32)
@@ -19,10 +23,6 @@ region = Rect2(0, 0, 16, 32)
 atlas = ExtResource("2_6xi77")
 region = Rect2(16, 0, 16, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oshik"]
-atlas = ExtResource("2_6xi77")
-region = Rect2(48, 0, 16, 32)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_5u05h"]
 animations = [{
 "frames": [{
@@ -30,7 +30,31 @@ animations = [{
 "texture": SubResource("AtlasTexture_ua63u")
 }],
 "loop": true,
-"name": &"crouching",
+"name": &"crouch1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oshik")
+}],
+"loop": true,
+"name": &"crouch2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ua63u")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oshik")
+}],
+"loop": true,
+"name": &"grind",
 "speed": 5.0
 }, {
 "frames": [{
@@ -38,7 +62,15 @@ animations = [{
 "texture": SubResource("AtlasTexture_f607m")
 }],
 "loop": true,
-"name": &"jumping",
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f607m")
+}],
+"loop": true,
+"name": &"jump",
 "speed": 5.0
 }, {
 "frames": [{
@@ -49,15 +81,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_y7260")
 }],
 "loop": true,
-"name": &"skating",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_oshik")
-}],
-"loop": true,
-"name": &"super_crouching",
+"name": &"skate",
 "speed": 5.0
 }]
 
@@ -70,8 +94,7 @@ metadata/_edit_group_ = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_5u05h")
-animation = &"skating"
-frame_progress = 0.7310848
+animation = &"grind"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -15)

@@ -31,15 +31,12 @@ func get_input(dt: float) -> void:
     facing_right = false
     velocity.x -= dt * ACCEL
     animated_sprite.flip_h = true
-    animated_sprite.play("skating")
   elif Input.is_action_pressed("right"):
     facing_right = true
     velocity.x += dt * ACCEL
     animated_sprite.flip_h = false
-    animated_sprite.play("skating")
   elif (abs(velocity.x) < MIN_H_VELOCITY):
     velocity.x = 0.
-    animated_sprite.stop()
 
 
   # Jump
@@ -57,10 +54,39 @@ func get_input(dt: float) -> void:
   # can_grind &= abs(velocity.x) > GRIND_VEL_THRESHOLD
   if can_grind && Input.is_action_just_pressed("grind"):
     is_grinding = true
-   
+
+
+func animate() -> void:
+
+  animated_sprite.flip_h = !facing_right
+
+  # Start with grinding animations (can be mid air on on ground)
+  if is_grinding:
+    animated_sprite.play("grind")
+
+  # Ground animations
+  elif is_on_floor():
+    if jump_charge > 0 && jump_charge < JUMP_TIMER:
+      animated_sprite.play("crouch1")
+    elif jump_charge > JUMP_TIMER:
+      animated_sprite.play("crouch2")
+    elif velocity.x:
+      animated_sprite.play("skate")
+    else:
+      animated_sprite.play("idle")
+
+  # Mid air animations
+
+  else:
+    if velocity.y <= 0:
+      animated_sprite.play("jump")
+    else:
+      animated_sprite.play("fall")
+
 
 func _physics_process(dt: float) -> void:
   get_input(dt)
+  animate()
   if is_grinding:
     velocity.x = MAX_H_VELOCITY if facing_right else -MAX_H_VELOCITY
     velocity.y = 0
