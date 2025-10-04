@@ -5,19 +5,28 @@ extends CharacterBody2D
 
 # Constants
 
+  # Physics
 const ACCEL: float = 400.
 const GRAVITY: float = 1000.
 const MAX_H_VELOCITY: float = 400.
 const MIN_H_VELOCITY: float = 10.
-const GRIND_VEL_THRESHOLD: float = MAX_H_VELOCITY * .5
 const FRICTION: float = .01
-const JUMP_TIMER: float = 1.
-const JUMP_TIMER_CAP: float= 2.
+
+const GRIND_VEL_THRESHOLD: float = MAX_H_VELOCITY * .5
 const JUMP_SMALL_IMPULSE: float = 300.
 const JUMP_BIG_IMPULSE: float = 500.
 
+  # Timers
+const JUMP_TIMER: float = .5
+const JUMP_TIMER_CAP: float= 1.
+
+const KICK_DURATION: float = .1
+const KICK_COOLDOWN: float = .5
+
 # Player States
 var jump_charge: float = 0.
+var kick_cooldown: float = 0.
+var is_kicking: bool = false
 var on_grindable: bool = false
 var is_grinding: bool = false
 var facing_right: bool = true
@@ -36,6 +45,9 @@ func get_input(dt: float) -> void:
   elif (abs(velocity.x) < MIN_H_VELOCITY):
     velocity.x = 0.
 
+  if !is_grinding && Input.is_action_just_pressed("kick"):
+    kick_cooldown = KICK_COOLDOWN
+    is_kicking = true
 
   # Jump
   if is_on_floor():
@@ -52,14 +64,17 @@ func get_input(dt: float) -> void:
   # can_grind &= abs(velocity.x) > GRIND_VEL_THRESHOLD
   if can_grind && Input.is_action_just_pressed("grind"):
     is_grinding = true
+    is_kicking = false
+    kick_cooldown = 0.
 
 
 func animate() -> void:
-
   animated_sprite.flip_h = !facing_right
 
-  # Start with grinding animations (can be mid air on on ground)
-  if is_grinding:
+  # Start with grinding and is_kicking animations (can be mid air on on ground)
+  if is_kicking:
+    animated_sprite.play("idle")
+  elif is_grinding:
     animated_sprite.play("grind")
 
   # Ground animations
@@ -83,8 +98,21 @@ func animate() -> void:
 
 
 func _physics_process(dt: float) -> void:
+
+  # Input
   get_input(dt)
-  animate()
+
+  # States and cooldowns updates
+  if !is_on_floor():
+    jump_charge = 0.
+
+  if kick_cooldown:
+    kick_cooldown = max(kick_cooldown - dt, 0.)
+    if kick_cooldown < KICK_COOLDOWN - KICK_DURATION:
+      is_kicking = false
+
+  
+  # Enforced physics state
   if is_grinding:
     velocity.x = MAX_H_VELOCITY if facing_right else -MAX_H_VELOCITY
     velocity.y = 0
@@ -94,6 +122,11 @@ func _physics_process(dt: float) -> void:
     velocity.x = clamp(velocity.x, -MAX_H_VELOCITY, MAX_H_VELOCITY);
     # Gravity
     velocity.y += dt * GRAVITY
+
+  # Animation
+  animate()
+
+  # Physics update
   move_and_slide()
 
 
