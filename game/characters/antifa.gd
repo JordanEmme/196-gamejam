@@ -20,7 +20,7 @@ const JUMP_BIG_IMPULSE: float = 500.
 var jump_charge: float = 0.
 var on_grindable: bool = false
 var is_grinding: bool = false
-var facing_right = true
+var facing_right: bool = true
 
 func get_input(dt: float) -> void:
 
@@ -99,11 +99,12 @@ func _physics_process(dt: float) -> void:
 
 func _on_colliders_body_entered(body: Node2D) -> void:
   if body.get_parent() == grindables:
-    print("Enter")
     on_grindable = true
 
 
 func _on_colliders_body_exited(body: Node2D) -> void:
   if body.get_parent() == grindables:
     on_grindable = false
-    is_grinding = false
+    if is_grinding:
+      body.free()
+      is_grinding = false
