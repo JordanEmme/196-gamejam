@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ccsuiov4ju6lv"]
+[gd_scene load_steps=11 format=3 uid="uid://ccsuiov4ju6lv"]
 
 [ext_resource type="Script" uid="uid://4crxwkngetem" path="res://characters/antifa.gd" id="1_txhom"]
 [ext_resource type="Texture2D" uid="uid://de5va1dtuqr0l" path="res://assets/antifa.png" id="2_6xi77"]
@@ -87,9 +87,11 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_10cyg"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6xi77"]
+size = Vector2(20, 8)
+
 [node name="Antifa" type="CharacterBody2D"]
 script = ExtResource("1_txhom")
-metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -15)
@@ -104,9 +106,9 @@ shape = SubResource("CapsuleShape2D_10cyg")
 collision_layer = 2
 collision_mask = 2
 
-[node name="Grindables" type="CollisionShape2D" parent="Colliders"]
-position = Vector2(0, -15)
-shape = SubResource("CapsuleShape2D_10cyg")
+[node name="Wheels" type="CollisionShape2D" parent="Colliders"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_6xi77")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_top = 135

@@ -7,7 +7,7 @@ extends CharacterBody2D
 
   # Physics
 const ACCEL: float = 400.
-const GRAVITY: float = 1000.
+const GRAVITY: float = 500.
 const MAX_H_VELOCITY: float = 400.
 const MIN_H_VELOCITY: float = 10.
 const FRICTION: float = .01
