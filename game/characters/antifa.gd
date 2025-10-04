@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @onready var grindable = $"../Grindable"
+@onready var area2d = $"Area2D/CollisionShape2D"
 
 @export var acceleration: float = 400.
 @export var grav: float = 1000.
@@ -48,8 +49,14 @@ func _physics_process(dt: float) -> void:
   velocity.x = clamp(velocity.x, -MAX_H_VELOCITY, MAX_H_VELOCITY);
   # Gravity
   velocity.y += dt * grav
-  for i in get_slide_collision_count():
-    var collider = get_slide_collision(i).get_collider()
-    if collider == grindable:
-      print("yeah")
+  # for i in area2d.get_slide_collision_count():
+  #   var collider = get_slide_collision(i).get_collider()
+  #   if collider == grindable:
+  #     print("yeah")
   move_and_slide()
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+  if body == grindable:
+    print("yeahh")
+  pass # Replace with function body.
