@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=4 uid="uid://dld8vt1jtcdcr"]
+[gd_scene load_steps=10 format=4 uid="uid://dld8vt1jtcdcr"]
 
 [ext_resource type="PackedScene" uid="uid://ccsuiov4ju6lv" path="res://characters/antifa.tscn" id="2_0d5ds"]
 [ext_resource type="Texture2D" uid="uid://cuctnkrc7beqw" path="res://assets/tilemap.png" id="2_kuu6s"]
-[ext_resource type="PackedScene" uid="uid://cm7uxrmb3akh0" path="res://assets/rail.tscn" id="3_4ikc1"]
+[ext_resource type="Texture2D" uid="uid://cg6goba3sudw6" path="res://assets/backgrounds/buildings.png" id="3_4ikc1"]
+[ext_resource type="Texture2D" uid="uid://c0ywall4p0xk6" path="res://assets/backgrounds/near_clouds.png" id="4_i3iap"]
+[ext_resource type="Texture2D" uid="uid://7jb7qcnfy1rt" path="res://assets/backgrounds/far_clouds.png" id="5_aw0ow"]
+[ext_resource type="Texture2D" uid="uid://cfpybp1f7u4cn" path="res://assets/backgrounds/sky.png" id="6_0xxye"]
+[ext_resource type="PackedScene" path="res://assets/rail.tscn" id="6_aw0ow"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4ikc1"]
 texture = ExtResource("2_kuu6s")
@@ -98,6 +102,44 @@ sources/2 = SubResource("TileSetAtlasSource_4ikc1")
 texture_filter = 1
 metadata/_edit_lock_ = true
 
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Buildings" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.7, 0.7)
+repeat_size = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Buildings"]
+z_index = -1
+texture = ExtResource("3_4ikc1")
+centered = false
+
+[node name="NearClouds" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.5, 0.5)
+repeat_size = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/NearClouds"]
+z_index = -2
+texture = ExtResource("4_i3iap")
+centered = false
+
+[node name="FarClouds" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.3, 0.3)
+repeat_size = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/FarClouds"]
+z_index = -3
+texture = ExtResource("5_aw0ow")
+centered = false
+
+[node name="Sky" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.1, 0.1)
+repeat_size = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Sky"]
+z_index = -4
+texture = ExtResource("6_0xxye")
+centered = false
+
 [node name="Ground" type="TileMapLayer" parent="."]
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAAAAoAAgABAAMAAAABAAoAAgACAAMAAAACAAsAAgABAAMAAAADAAsAAgACAAMAAAAEAAwAAgABAAMAAAAFAAwAAgACAAMAAAAGAA0AAgAAAAMAAAAHAA4AAgAAAAMAAAAIAA8AAgABAAAAAAAJAA8AAgABAAAAAAAKAA8AAgABAAAAAAALAA8AAgABAAAAAAAMAA8AAgABAAAAAAANAA8AAgACAAAAAAAQAA4AAgAAAAAAAAARAA4AAgABAAAAAAASAA4AAgABAAAAAAATAA4AAgABAAAAAAAUAA0AAgACAAIAAAAWAAsAAgAAAAEAAAAVAAwAAgACAAIAAAAWAAoAAgAAAAAAAAAXAAoAAgABAAAAAAAYAAoAAgABAAAAAAAZAAoAAgABAAAAAAAaAAoAAgABAAAAAAAbAAoAAgACAAAAAAAbAAsAAgACAAEAAAAbAAwAAgACAAEAAAAbAA0AAgACAAEAAAAbAA4AAgACAAEAAAAbAA8AAgACAAEAAAAbABAAAgACAAEAAAAQAA8AAgAAAAEAAAAQABAAAgAAAAEAAAANABAAAgACAAEAAAARABAAAgABAAEAAAASABAAAgABAAEAAAATABAAAgABAAEAAAAUABAAAgABAAEAAAAVABAAAgABAAEAAAAWABAAAgABAAEAAAAXABAAAgABAAEAAAAYABAAAgABAAEAAAAZABAAAgABAAEAAAAaABAAAgABAAEAAAAAAAsAAgABAAEAAAAAAAwAAgABAAEAAAAAAA0AAgABAAEAAAAAAA4AAgABAAEAAAAAAA8AAgABAAEAAAAAABAAAgABAAEAAAABABAAAgABAAEAAAACABAAAgABAAEAAAADABAAAgABAAEAAAAEABAAAgABAAEAAAAFABAAAgABAAEAAAAGABAAAgABAAEAAAAHABAAAgABAAEAAAAIABAAAgABAAEAAAAJABAAAgABAAEAAAAKABAAAgABAAEAAAALABAAAgABAAEAAAAMABAAAgABAAEAAAACAA4AAgABAAEAAAACAA0AAgABAAEAAAACAAwAAgABAAEAAAABAAwAAgABAAEAAAABAAsAAgABAAEAAAABAA4AAgABAAEAAAABAA8AAgABAAEAAAACAA8AAgABAAEAAAADAA8AAgABAAEAAAADAA4AAgABAAEAAAADAA0AAgABAAEAAAADAAwAAgABAAEAAAAEAA0AAgABAAEAAAAEAA4AAgABAAEAAAAEAA8AAgABAAEAAAAFAA8AAgABAAEAAAAFAA4AAgABAAEAAAAFAA0AAgABAAEAAAAGAA4AAgABAAEAAAAGAA8AAgABAAEAAAAHAA8AAgABAAEAAAAYAA8AAgABAAEAAAAYAA4AAgABAAEAAAAYAA0AAgABAAEAAAAYAAwAAgABAAEAAAAYAAsAAgABAAEAAAAXAAsAAgABAAEAAAAXAAwAAgABAAEAAAAWAAwAAgABAAEAAAAWAA0AAgABAAEAAAAVAA0AAgABAAEAAAAVAA4AAgABAAEAAAAUAA4AAgABAAEAAAAUAA8AAgABAAEAAAATAA8AAgABAAEAAAASAA8AAgABAAEAAAARAA8AAgABAAEAAAAVAA8AAgABAAEAAAAWAA8AAgABAAEAAAAWAA4AAgABAAEAAAAXAA4AAgABAAEAAAAXAA0AAgABAAEAAAAXAA8AAgABAAEAAAAZAAsAAgABAAEAAAAZAAwAAgABAAEAAAAZAA0AAgABAAEAAAAZAA4AAgABAAEAAAAZAA8AAgABAAEAAAAaAA8AAgABAAEAAAAaAA4AAgABAAEAAAAaAA0AAgABAAEAAAAaAAwAAgABAAEAAAAaAAsAAgABAAEAAAABAA0AAgABAAEAAAA=")
@@ -105,7 +147,7 @@ tile_set = SubResource("TileSet_1lbi8")
 
 [node name="Grindables" type="Node2D" parent="."]
 
-[node name="Rail" parent="Grindables" instance=ExtResource("3_4ikc1")]
+[node name="Rail" parent="Grindables" instance=ExtResource("6_aw0ow")]
 position = Vector2(123, 161)
 
 [node name="Antifa" parent="." instance=ExtResource("2_0d5ds")]
