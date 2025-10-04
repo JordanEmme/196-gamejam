@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=4 uid="uid://blwpg07kdwsac"]
+[gd_scene load_steps=5 format=4 uid="uid://dld8vt1jtcdcr"]
 
 [ext_resource type="Texture2D" uid="uid://cqwv2ebxpaf53" path="res://tilesheet_complete.png" id="1_qodpt"]
+[ext_resource type="PackedScene" uid="uid://ccsuiov4ju6lv" path="res://antifa.tscn" id="2_0d5ds"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0d5ds"]
 texture = ExtResource("1_qodpt")
@@ -28,7 +29,12 @@ physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_0d5ds")
 
 [node name="Node2D" type="Node2D"]
+metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(627, 346)
 tile_map_data = PackedByteArray("AAAAAP//AQABAAAAAAABAP//AQACAAAAAAACAP//AQADAAAAAAADAAEAAQABAAAAAAAEAAEAAQACAAAAAAAFAAAAAQABAAEAAAAGAP//AQABAAEAAAAFAAEAAQABAAIAAAAGAAAAAQABAAIAAAD7//7/AQACAAEAAAD8/wAAAQACAAEAAAD7/wAAAQACAAIAAAD7////AQACAAIAAAD8/wEAAQACAAIAAAD6//7/AQACAAAAAAD9/wEAAQADAAAAAAD9/wMAAQABAAAAAAD+/wMAAQACAAAAAAD//wMAAQACAAAAAAAAAAMAAQACAAAAAAABAAMAAQACAAAAAAACAAMAAQACAAAAAAADAAMAAQACAAAAAAAEAAMAAQADAAAAAAA=")
 tile_set = SubResource("TileSet_1lbi8")
+
+[node name="Antifa" parent="." instance=ExtResource("2_0d5ds")]
+position = Vector2(572, 482)

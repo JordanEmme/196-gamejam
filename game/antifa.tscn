@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccsuiov4ju6lv"]
+
+[ext_resource type="Script" uid="uid://d4hjqlov55n0j" path="res://antifa.gd" id="1_txhom"]
+[ext_resource type="Texture2D" uid="uid://8s1t8j0b84gd" path="res://icon.svg" id="2_wuqut"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_10cyg"]
+
+[node name="Antifa" type="CharacterBody2D"]
+script = ExtResource("1_txhom")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4.7683716e-07, -15)
+scale = Vector2(0.15625001, 0.234375)
+texture = ExtResource("2_wuqut")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("CapsuleShape2D_10cyg")
