@@ -11,6 +11,7 @@ const ACCEL: float = 400.
 const GRAVITY: float = 1000.
 const MAX_H_VELOCITY: float = 400.
 const MIN_H_VELOCITY: float = 10.
+const GRIND_VEL_THRESHOLD: float = MAX_H_VELOCITY * .5
 const FRICTION: float = .01
 const JUMP_TIMER: float = 1.
 const JUMP_TIMER_CAP: float= 2.
@@ -19,15 +20,20 @@ const JUMP_BIG_IMPULSE: float = 500.
 
 # Player States
 var jump_charge: float = 0.
+var on_grindable: bool = false
+var is_grinding: bool = false
+var facing_right = true
 
 func get_input(dt: float) -> void:
 
   # Horizontal movement
   if Input.is_action_pressed("left"):
+    facing_right = false
     velocity.x -= dt * ACCEL
     animated_sprite.flip_h = true
     animated_sprite.play("skating")
   elif Input.is_action_pressed("right"):
+    facing_right = true
     velocity.x += dt * ACCEL
     animated_sprite.flip_h = false
     animated_sprite.play("skating")
@@ -46,21 +52,35 @@ func get_input(dt: float) -> void:
       jump_charge = 0.;
 
 
+  # Grind
+  var can_grind: bool = on_grindable
+  # can_grind &= abs(velocity.x) > GRIND_VEL_THRESHOLD
+  if can_grind && Input.is_action_just_pressed("grind"):
+    is_grinding = true
+   
+
 func _physics_process(dt: float) -> void:
   get_input(dt)
-  # Friction
-  velocity.x -= sign(velocity.x) * dt * velocity.x * velocity.x * FRICTION
-  velocity.x = clamp(velocity.x, -MAX_H_VELOCITY, MAX_H_VELOCITY);
-  # Gravity
-  velocity.y += dt * GRAVITY
+  if is_grinding:
+    velocity.x = MAX_H_VELOCITY if facing_right else -MAX_H_VELOCITY
+    velocity.y = 0
+  else:
+    # Friction
+    velocity.x -= sign(velocity.x) * dt * velocity.x * velocity.x * FRICTION
+    velocity.x = clamp(velocity.x, -MAX_H_VELOCITY, MAX_H_VELOCITY);
+    # Gravity
+    velocity.y += dt * GRAVITY
   move_and_slide()
 
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_colliders_body_entered(body: Node2D) -> void:
   if body == grindable:
-    print("yeahh")
-  pass # Replace with function body.
+    print("Enter")
+    on_grindable = true
 
 
 func _on_colliders_body_exited(body: Node2D) -> void:
-  pass # Replace with function body.
+  if body == grindable:
+    print("exit")
+    on_grindable = false
+    is_grinding = false
