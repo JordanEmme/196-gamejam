@@ -7,9 +7,10 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 10.0
-offset_top = -26.0
-offset_right = 50.0
+offset_top = -44.0
+offset_right = 213.0
 offset_bottom = -10.0
 grow_vertical = 0
-text = "Score:"
-metadata/_edit_lock_ = true
+bbcode_enabled = true
+text = "[b]wasd[/b] to move
+[b]space[/b] to charge jump"
