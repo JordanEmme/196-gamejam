@@ -2,9 +2,10 @@ extends CharacterBody2D
 
 @onready var grindables = $"../Grindables"
 @onready var animated_sprite = $AntifaSprite
-@onready var player_camera = $AntifaCamera
 
-# Constants
+# --------- #
+# Constants #
+# --------- #
 
   # Window
 const SCENE_WIDTH:float = 480.
@@ -14,7 +15,7 @@ const SCENE_HEIGHT:float = 270.
 const ACCEL: float = 300.
 const GRAVITY: float = 700.
 const MAX_H_VELOCITY: float = 300.
-const MIN_H_VELOCITY: float = 50.
+const MIN_H_VELOCITY: float = 30.
 const FRICTION: float = .01
 
 const GRIND_VEL_THRESHOLD: float = MAX_H_VELOCITY * .5
@@ -28,13 +29,31 @@ const JUMP_TIMER_CAP: float= 1.
 const KICK_DURATION: float = .1
 const KICK_COOLDOWN: float = .5
 
-# Player States
+
+# ------------- #
+# Player States #
+# ------------- #
+
 var jump_charge: float = 0.
 var kick_cooldown: float = 0.
 var is_kicking: bool = false
 var on_grindable: bool = false
 var is_grinding: bool = false
 var facing_right: bool = true
+
+
+# --------------- #
+# Node properties #
+# --------------- #
+
+func _ready() -> void:
+  floor_stop_on_slope = false
+  floor_max_angle = 1.047 # 60 degrees
+
+
+# ----- #
+# Input #
+# ----- #
 
 func get_input(dt: float) -> void:
 
@@ -73,6 +92,10 @@ func get_input(dt: float) -> void:
     kick_cooldown = 0.
 
 
+# ------- #
+# Animate #
+# ------- #
+
 func animate() -> void:
   animated_sprite.flip_h = !facing_right
 
@@ -102,6 +125,10 @@ func animate() -> void:
       animated_sprite.play("fall")
 
 
+# ------- #
+# Physics #
+# ------- #
+
 func _physics_process(dt: float) -> void:
 
   # Input
@@ -122,11 +149,13 @@ func _physics_process(dt: float) -> void:
     velocity.x = MAX_H_VELOCITY if facing_right else -MAX_H_VELOCITY
     velocity.y = 0
   else:
-    # Friction
-    velocity.x -= sign(velocity.x) * dt * velocity.x * velocity.x * FRICTION
-    velocity.x = clamp(velocity.x, -MAX_H_VELOCITY, MAX_H_VELOCITY);
-    # Gravity
-    velocity.y += dt * GRAVITY
+    # if !is_on_floor():
+      # Gravity in free fall
+      velocity.y += dt * GRAVITY
+    # else:
+      # Sliding down surfaces
+      velocity.x -= sign(velocity.x) * dt * velocity.x * velocity.x * FRICTION
+      velocity.x = clamp(velocity.x, -MAX_H_VELOCITY, MAX_H_VELOCITY)
 
   # Animation
   animate()
@@ -134,6 +163,10 @@ func _physics_process(dt: float) -> void:
   # Physics update
   move_and_slide()
 
+
+# --------- #
+# Collision #
+# --------- #
 
 func _on_colliders_body_entered(body: Node2D) -> void:
   if body.get_parent() == grindables:
