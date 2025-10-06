@@ -13,7 +13,7 @@ const SCENE_HEIGHT:float = 270.
 
   # Physics
 const ACCEL: float = 300.
-const GRAVITY: float = 700.
+const GRAVITY: float = 900.
 const MAX_H_VELOCITY: float = 300.
 const MIN_H_VELOCITY: float = 30.
 const FRICTION: float = .01
@@ -117,7 +117,6 @@ func animate() -> void:
       animated_sprite.play("idle")
 
   # Mid air animations
-
   else:
     if velocity.y <= 0:
       animated_sprite.play("jump")
@@ -143,19 +142,19 @@ func _physics_process(dt: float) -> void:
     if kick_cooldown < KICK_COOLDOWN - KICK_DURATION:
       is_kicking = false
 
-
   # Enforced physics state
   if is_grinding:
     velocity.x = MAX_H_VELOCITY if facing_right else -MAX_H_VELOCITY
     velocity.y = 0
   else:
-    # if !is_on_floor():
-      # Gravity in free fall
-      velocity.y += dt * GRAVITY
-    # else:
-      # Sliding down surfaces
-      velocity.x -= sign(velocity.x) * dt * velocity.x * velocity.x * FRICTION
-      velocity.x = clamp(velocity.x, -MAX_H_VELOCITY, MAX_H_VELOCITY)
+    velocity.y += dt * GRAVITY
+    # TO-DO:
+    # two problems right now are
+    #   1. jumping whilst sliding doesn't retain x-direction movement
+    #   2. sliding is very slow
+    # possible fix: use get_last_slide_collision() ?
+    velocity.x -= sign(velocity.x) * dt * velocity.x * velocity.x * FRICTION
+    velocity.x = clamp(velocity.x, -MAX_H_VELOCITY, MAX_H_VELOCITY)
 
   # Animation
   animate()
